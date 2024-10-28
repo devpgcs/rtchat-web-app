@@ -16,7 +16,7 @@ export const publicAxios = axios.create({
 export const createPrivateAxios = (
   token: string,
   expiredSessionCb: () => Promise<void>,
-  interceptorErrorCb: (error: any) => void
+  interceptorErrorCb?: (error: unknown) => void
 ): AxiosInstance => {
   const privateAxios = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,

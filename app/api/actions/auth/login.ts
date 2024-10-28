@@ -5,6 +5,8 @@ import { getErrorMessage } from "@devpgcs/app/utils/api-utils";
 
 import { endpoints, publicAxios } from "../..";
 
+import { ServerActionUI } from "../../types/server-action-ui.type";
+
 import { LoginPayload } from "./interfaces/login-payload.interface";
 import { LoginResponse } from "./interfaces/login-response.interface";
 
@@ -19,7 +21,7 @@ export default async function login(payload: LoginPayload): Promise<ServerAction
     const { data: loginResponse } = await publicAxios.post<LoginResponse>(endpoints.auth.login, payload);
 
     // Save the token in the server cookies
-    saveToken(loginResponse.token);
+    await saveToken(loginResponse.token);
 
     return loginResponse;
   } catch (error) {

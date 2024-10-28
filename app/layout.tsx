@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 import localFont from "next/font/local";
 
+import AuthProvider from "./contexts/auth/auth-provider";
+
 import "./globals.css";
 
 const geistSans = localFont({
@@ -27,7 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

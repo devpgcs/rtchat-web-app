@@ -13,4 +13,4 @@
  * }
  * ```
  */
-type ServerActionUI<ApiResponse> = ApiResponse | { errorMessage: string };
+export type ServerActionUI<ApiResponse> = ApiResponse | { errorMessage: string };

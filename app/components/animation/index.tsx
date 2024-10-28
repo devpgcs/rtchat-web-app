@@ -55,15 +55,15 @@ export function Animation({ children, direction }: AnimationProps) {
               divToAnimate.style.transform = !isAboveDivCalc ? "translate(0, 0)" : initialStyles.transform!;
             }
           }, 500);
-        } else {
-          timerRef.current && clearTimeout(timerRef.current);
+        } else if (timerRef.current) {
+          clearTimeout(timerRef.current);
         }
       }
     };
 
     window.addEventListener("scroll", scrollSubscriber);
     return () => window.removeEventListener("scroll", scrollSubscriber);
-  }, [divRef.current, timerRef.current, initialStyles, isAboveDiv, setIsAboveDiv]);
+  }, [initialStyles, isAboveDiv, setIsAboveDiv]);
 
   return (
     <div className="overflow-hidden">

@@ -2,43 +2,45 @@
 
 import Link from "next/link";
 
+import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
 
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { DrawerNav } from "@devpgcs/app/components/drawer-nav";
+
 export function Navigation() {
-  const [canShowSidebar, setCanShowSidebar] = useState<boolean>(false);
+  const [canShowDrawerNav, setCanShowDrawerNav] = useState<boolean>(false);
 
   const pathname = usePathname();
 
-  const navigationBackDiv = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (navigationBackDiv.current) {
-      navigationBackDiv.current.classList.toggle("-translate-x-full", !canShowSidebar);
-    }
-  }, [canShowSidebar, navigationBackDiv.current]);
+  const closeDrawerNav = () => setCanShowDrawerNav(false);
 
   const navList = (
     <nav>
       <ul className="flex max-md:flex-col gap-4 text-slate-100 max-md:text-slate-700">
         {pathname !== "/" && (
           <li>
-            <Link href="/">Home</Link>
+            <Link href="/" onClick={closeDrawerNav}>
+              Home
+            </Link>
           </li>
         )}
 
         {pathname !== "/auth/login" && (
           <li>
-            <Link href="/auth/login">Login</Link>
+            <Link href="/auth/login" onClick={closeDrawerNav}>
+              Login
+            </Link>
           </li>
         )}
 
         {pathname !== "/auth/register" && (
           <li>
-            <Link href="/auth/register">Register</Link>
+            <Link href="/auth/register" onClick={closeDrawerNav}>
+              Register
+            </Link>
           </li>
         )}
       </ul>
@@ -46,7 +48,7 @@ export function Navigation() {
   );
 
   const mobileNavButton = (
-    <div role="button" className="block min-[768px]:hidden" onClick={() => setCanShowSidebar(true)}>
+    <div role="button" className="block min-[768px]:hidden" onClick={() => setCanShowDrawerNav(true)}>
       <FontAwesomeIcon icon={faBars} size="2x" className="text-slate-100" />
     </div>
   );
@@ -57,15 +59,9 @@ export function Navigation() {
 
       {mobileNavButton}
 
-      <div
-        ref={navigationBackDiv}
-        className="bg-black/50 fixed left-0 top-0 min-w-full min-h-screen transition-all -translate-x-full"
-        onClick={() => setCanShowSidebar(false)}
-      >
-        <nav className="bg-white w-3/4 min-h-screen p-8 max-md:text-slate-500 flex flex-col justify-between">
-          {navList}
-        </nav>
-      </div>
+      <DrawerNav isOpen={canShowDrawerNav} onClose={closeDrawerNav}>
+        {navList}
+      </DrawerNav>
     </>
   );
 }

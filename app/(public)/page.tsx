@@ -11,7 +11,7 @@ export default function Home() {
           Still losing customers?
           <br />
           <br />
-          <span className="text-lime-400">Let's fix that</span>
+          <span className="text-lime-400">Let&apos;s fix that</span>
         </h1>
       </section>
 
